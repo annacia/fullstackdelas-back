@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 require('dotenv').config();
 const firebaseAdmin = require("firebase-admin");
 const firebaseConfig = require("./config/firebaseConfig");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger-output.json')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,9 +29,9 @@ firebaseAdmin.initializeApp({
   }),
 });
 
-// Importar e usar as rotas
 const linkedinRoutes = require("./routes/linkedin");
 app.use("/linkedin", linkedinRoutes);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Outras rotas podem ser adicionadas da mesma forma
 

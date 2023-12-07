@@ -1,0 +1,210 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "FullStackDelas - Backend",
+    "description": "API Backend do projeto FullStackDelas"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "Linkedin"
+        ],
+        "description": "Endpoint para cadastrar um registro.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/requestBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "linkedin": {
+                    "example": "any"
+                  },
+                  "frase": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "linkedin": {
+                    "example": "any"
+                  },
+                  "frase": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "requestBody": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Nome do Usuário"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@test.com"
+          },
+          "linkedin": {
+            "type": "string",
+            "example": "https://www.linkedin.com/in/usuario"
+          },
+          "frase": {
+            "type": "string",
+            "example": "Uma frase bonita"
+          }
+        },
+        "required": [
+          "nome",
+          "email",
+          "linkedin",
+          "frase"
+        ]
+      },
+      "responseCreateSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "example": "Registro criado com sucesso"
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,14 +7,26 @@ const db = firebaseAdmin.database();
 
 // Endpoint para criar um novo registro (OK)
 router.post("/", async (req, res) => {
-    const { nome, email, linkedin, frase } = req.body;
-    const ref = await db.ref("linkedin").push({ "nome": nome, "email": email, "linkedin": linkedin, "frase": frase }, function(error) {
-      if (error) {
-        console.log("Failed with error: " + error)
-        res.status(500).json({ error: "Erro interno do servidor" });
-      }
-    })
-    res.status(201).json({ "msg": "Registro cadastrado com sucesso", "key": ref.key });
+  // #swagger.start
+  // #swagger.tags = ['Linkedin']
+  // #swagger.description = 'Endpoint para cadastrar um registro.'
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Informações',
+    required: true,
+    schema: {$ref: "#/definitions/requestBody"}
+  }*/
+  const { nome, email, linkedin, frase } = req.body;
+  const ref = await db.ref("linkedin").push({ "nome": nome, "email": email, "linkedin": linkedin, "frase": frase }, function(error) {
+    if (error) {
+      console.log("Failed with error: " + error)
+      // #swagger.response[500] = {error: 'Erro interno do servidor'}
+      res.status(500).json({ "error": "Erro interno do servidor" });
+    }
+  })
+
+  // #swagger.response[201] = {msg: 'Registro cadastrado com sucesso', key: -NkwFnvD7A8bmMZvo93H}
+  res.status(201).json({ "msg": "Registro cadastrado com sucesso", "key": ref.key });
 });
   
 // Endpoint para obter todos os registros (OK)
