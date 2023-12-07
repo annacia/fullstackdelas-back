@@ -8,9 +8,13 @@ const db = firebaseAdmin.database();
 // Endpoint para criar um novo registro (OK)
 router.post("/", async (req, res) => {
   // #swagger.start
-  // #swagger.tags = ['Linkedin']
-  // #swagger.description = 'Endpoint para cadastrar um registro.'
-  /* #swagger.parameters['body'] = {
+ 
+  /*
+  #swagger.path = '/linkedin'
+  #swagger.method = 'post'
+  #swagger.tags = ['Linkedin']
+  #swagger.description = 'Endpoint para cadastrar um registro.'
+  #swagger.parameters['body'] = {
     in: 'body',
     description: 'Informações',
     required: true,
@@ -31,6 +35,12 @@ router.post("/", async (req, res) => {
   
 // Endpoint para obter todos os registros (OK)
 router.get("/", async (req, res) => {
+  /*
+  #swagger.path = '/linkedin'
+  #swagger.method = 'get'
+  #swagger.tags = ['Linkedin']
+  #swagger.description = 'Endpoint para retornar todos registro.'
+  */
   db.ref("linkedin").once("value", (snapshot) => {
     // O objeto 'snapshot' contém os dados do nó 'linkedin'
     const linkedinData = snapshot.val();

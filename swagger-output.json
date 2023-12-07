@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/": {
+    "/linkedin": {
       "post": {
         "tags": [
           "Linkedin"
@@ -32,6 +32,9 @@
           "201": {
             "description": "Created"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -42,16 +45,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "nome": {
+                  "in": {
                     "example": "any"
                   },
-                  "email": {
+                  "description": {
                     "example": "any"
                   },
-                  "linkedin": {
+                  "required": {
                     "example": "any"
                   },
-                  "frase": {
+                  "schema": {
                     "example": "any"
                   }
                 }
@@ -61,7 +64,10 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "Linkedin"
+        ],
+        "description": "Endpoint para retornar todos registro.",
         "responses": {
           "201": {
             "description": "Created"
