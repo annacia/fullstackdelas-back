@@ -20,7 +20,7 @@ const doc = {
                 $frase: "Uma frase bonita"
             },
             responseCreateSuccess: {
-                msg: "Registro criado com sucesso"
+                $msg: "Registro criado com sucesso"
             }
         }
     }

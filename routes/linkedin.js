@@ -14,12 +14,7 @@ router.post("/", async (req, res) => {
   #swagger.method = 'post'
   #swagger.tags = ['Linkedin']
   #swagger.description = 'Endpoint para cadastrar um registro.'
-  #swagger.parameters['body'] = {
-    in: 'body',
-    description: 'Informações',
-    required: true,
-    schema: {$ref: "#/definitions/requestBody"}
-  }*/
+  */
   const { nome, email, linkedin, frase } = req.body;
   const ref = await db.ref("linkedin").push({ "nome": nome, "email": email, "linkedin": linkedin, "frase": frase }, function(error) {
     if (error) {
@@ -29,7 +24,10 @@ router.post("/", async (req, res) => {
     }
   })
 
-  // #swagger.response[201] = {msg: 'Registro cadastrado com sucesso', key: -NkwFnvD7A8bmMZvo93H}
+  /* #swagger.responses[200] = {
+    description: 'Registro cadastrado com sucesso',
+    schema: {$ref: "#/definitions/responseCreateSuccess"} }
+  } */
   res.status(201).json({ "msg": "Registro cadastrado com sucesso", "key": ref.key });
 });
   
@@ -62,6 +60,12 @@ router.get("/", async (req, res) => {
   
   // Endpoint para obter um registro por ID (OK)
 router.get("/:id", async (req, res) => {
+  /*
+  #swagger.path = '/linkedin/{id}'
+  #swagger.method = 'get'
+  #swagger.tags = ['Linkedin']
+  #swagger.description = 'Endpoint para obter um registro por ID.'
+  */
   try {
     const { id } = req.params;
     db.ref("linkedin").child(id).once("value", (snapshot) => {
@@ -84,6 +88,12 @@ router.get("/:id", async (req, res) => {
   
 // Endpoint para atualizar um registro por ID (OK)
 router.put("/:id", async (req, res) => {
+  /*
+  #swagger.path = '/linkedin/{id}'
+  #swagger.method = 'put'
+  #swagger.tags = ['Linkedin']
+  #swagger.description = 'Endpoint para atualizar um registro por ID.'
+  */
   const { id } = req.params;
   const { nome, email, linkedin, frase } = req.body;
   let objetoData = undefined
@@ -114,6 +124,12 @@ router.put("/:id", async (req, res) => {
   
 // Endpoint para excluir um registro por ID (OK)
 router.delete("/:id", async (req, res) => {
+  /*
+  #swagger.path = '/linkedin/{id}'
+  #swagger.method = 'delete'
+  #swagger.tags = ['Linkedin']
+  #swagger.description = 'Endpoint para excluir um registro por ID.'
+  */
   try {
     const { id } = req.params;
     await db.ref("linkedin").child(id).remove();

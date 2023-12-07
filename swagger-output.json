@@ -17,18 +17,25 @@
           "Linkedin"
         ],
         "description": "Endpoint para cadastrar um registro.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Informações",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/requestBody"
-            }
-          }
-        ],
         "responses": {
+          "200": {
+            "description": "Registro cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseCreateSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseCreateSuccess"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/components/schemas/responseCreateSuccess"
+            }
+          },
           "201": {
             "description": "Created"
           },
@@ -45,13 +52,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "in": {
-                    "example": "any"
-                  },
                   "description": {
-                    "example": "any"
-                  },
-                  "required": {
                     "example": "any"
                   },
                   "schema": {
@@ -78,9 +79,12 @@
         }
       }
     },
-    "/{id}": {
+    "/linkedin/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Linkedin"
+        ],
+        "description": "Endpoint para obter um registro por ID.",
         "parameters": [
           {
             "name": "id",
@@ -104,7 +108,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Linkedin"
+        ],
+        "description": "Endpoint para atualizar um registro por ID.",
         "parameters": [
           {
             "name": "id",
@@ -151,7 +158,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Linkedin"
+        ],
+        "description": "Endpoint para excluir um registro por ID.",
         "parameters": [
           {
             "name": "id",
@@ -200,7 +210,10 @@
           "email",
           "linkedin",
           "frase"
-        ]
+        ],
+        "xml": {
+          "name": "requestBody"
+        }
       },
       "responseCreateSuccess": {
         "type": "object",
@@ -209,6 +222,12 @@
             "type": "string",
             "example": "Registro criado com sucesso"
           }
+        },
+        "required": [
+          "msg"
+        ],
+        "xml": {
+          "name": "responseCreateSuccess"
         }
       }
     }
