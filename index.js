@@ -9,7 +9,17 @@ const cors = require('cors');
 
 const app = express();
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 3000;
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  app.use(cors());
+
+  next();
+})
 
 app.use(bodyParser.json());
 
@@ -34,19 +44,6 @@ firebaseAdmin.initializeApp({
 const linkedinRoutes = require("./routes/linkedin");
 app.use("/linkedin", linkedinRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
-app.use(cors({
-  origin: '*', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization']
-}))
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  next();
-});
 
 // Outras rotas podem ser adicionadas da mesma forma
 
