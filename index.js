@@ -35,7 +35,7 @@ app.use("/linkedin", linkedinRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const corsOptions = {
-  origin: '*', //
+  origin: `'*'`,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
