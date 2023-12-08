@@ -5,6 +5,7 @@ const firebaseAdmin = require("firebase-admin");
 const firebaseConfig = require("./config/firebaseConfig");
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger-output.json')
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +33,15 @@ firebaseAdmin.initializeApp({
 const linkedinRoutes = require("./routes/linkedin");
 app.use("/linkedin", linkedinRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+const corsOptions = {
+  origin: '*', //
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 // Outras rotas podem ser adicionadas da mesma forma
 
