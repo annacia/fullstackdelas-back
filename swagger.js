@@ -8,7 +8,7 @@ const doc = {
     },
     servers: [
         {
-            url: 'https://fullstackdelas-back.onrender.com/'
+            url: 'http://fullstackdelas-back.onrender.com/'
         }
     ],
     components: {

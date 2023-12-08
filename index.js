@@ -8,7 +8,8 @@ const swaggerFile = require('./swagger-output.json')
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3000;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const port = process.env.PORT || 443;
 
 app.use(bodyParser.json());
 
