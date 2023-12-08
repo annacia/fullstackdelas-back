@@ -18,7 +18,7 @@
         ],
         "description": "Endpoint para cadastrar um registro.",
         "responses": {
-          "200": {
+          "201": {
             "description": "Registro cadastrado com sucesso",
             "content": {
               "application/json": {
@@ -31,19 +31,22 @@
                   "$ref": "#/components/schemas/responseCreateSuccess"
                 }
               }
-            },
-            "schema": {
-              "$ref": "#/components/schemas/responseCreateSuccess"
             }
           },
-          "201": {
-            "description": "Created"
-          },
-          "404": {
-            "description": "Not Found"
-          },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -52,10 +55,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "description": {
+                  "nome": {
                     "example": "any"
                   },
-                  "schema": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "linkedin": {
+                    "example": "any"
+                  },
+                  "frase": {
                     "example": "any"
                   }
                 }
@@ -71,10 +80,34 @@
         "description": "Endpoint para retornar todos registro.",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Todos os registros retornados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseGet"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseGet"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
           }
         }
       }
@@ -97,13 +130,52 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Registro retornado pelo ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseGetRegisterById"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseGetRegisterById"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Registro não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseNotFound"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseNotFound"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/components/schemas/responseError"
+            }
           }
         }
       },
@@ -124,13 +196,37 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Registro atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseUpdateSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseUpdateSuccess"
+                }
+              }
+            }
           },
           "404": {
             "description": "Not Found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -174,10 +270,34 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Registro excluído com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseDeleteSuccess"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseDeleteSuccess"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
           }
         }
       }
@@ -185,7 +305,7 @@
   },
   "components": {
     "schemas": {
-      "requestBody": {
+      "requestRegisterCreate": {
         "type": "object",
         "properties": {
           "nome": {
@@ -212,7 +332,64 @@
           "frase"
         ],
         "xml": {
-          "name": "requestBody"
+          "name": "requestRegisterCreate"
+        }
+      },
+      "responseGet": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "nome": {
+              "type": "string",
+              "example": "Nome do Usuário"
+            },
+            "email": {
+              "type": "string",
+              "example": "email@test.com"
+            },
+            "linkedin": {
+              "type": "string",
+              "example": "https://www.linkedin.com/in/usuario"
+            },
+            "frase": {
+              "type": "string",
+              "example": "Uma frase bonita"
+            }
+          }
+        },
+        "xml": {
+          "name": "responseGet"
+        }
+      },
+      "responseGetRegisterById": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Nome do Usuário"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@test.com"
+          },
+          "linkedin": {
+            "type": "string",
+            "example": "https://www.linkedin.com/in/usuario"
+          },
+          "frase": {
+            "type": "string",
+            "example": "Uma frase bonita"
+          }
+        },
+        "required": [
+          "nome",
+          "email",
+          "linkedin",
+          "frase"
+        ],
+        "xml": {
+          "name": "responseGetRegisterById"
         }
       },
       "responseCreateSuccess": {
@@ -221,13 +398,83 @@
           "msg": {
             "type": "string",
             "example": "Registro criado com sucesso"
+          },
+          "key": {
+            "type": "string",
+            "example": "-123abc"
+          }
+        },
+        "required": [
+          "msg",
+          "key"
+        ],
+        "xml": {
+          "name": "responseCreateSuccess"
+        }
+      },
+      "responseUpdateSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "example": "Registro atualizado com sucesso"
+          },
+          "key": {
+            "type": "string",
+            "example": "-123abc"
+          }
+        },
+        "required": [
+          "msg",
+          "key"
+        ],
+        "xml": {
+          "name": "responseUpdateSuccess"
+        }
+      },
+      "responseDeleteSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "example": "Registro excluído com sucesso"
           }
         },
         "required": [
           "msg"
         ],
         "xml": {
-          "name": "responseCreateSuccess"
+          "name": "responseDeleteSuccess"
+        }
+      },
+      "responseError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Erro interno do servidor"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "xml": {
+          "name": "responseError"
+        }
+      },
+      "responseNotFound": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Registro não encontrado"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "xml": {
+          "name": "responseNotFound"
         }
       }
     }

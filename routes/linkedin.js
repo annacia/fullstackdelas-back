@@ -7,24 +7,27 @@ const db = firebaseAdmin.database();
 
 // Endpoint para criar um novo registro (OK)
 router.post("/", async (req, res) => {
-  // #swagger.start
  
   /*
   #swagger.path = '/linkedin'
   #swagger.method = 'post'
   #swagger.tags = ['Linkedin']
   #swagger.description = 'Endpoint para cadastrar um registro.'
+  #swagger.request['body'] = {description: 'blablabla', $ref: "#/definitions/requestRegisterCreate"}
   */
   const { nome, email, linkedin, frase } = req.body;
   const ref = await db.ref("linkedin").push({ "nome": nome, "email": email, "linkedin": linkedin, "frase": frase }, function(error) {
     if (error) {
       console.log("Failed with error: " + error)
-      // #swagger.response[500] = {error: 'Erro interno do servidor'}
+      /* #swagger.responses[500] = {
+        description: 'Erro interno do servidor',
+        schema: {$ref: "#/definitions/responseError"} }
+      } */
       res.status(500).json({ "error": "Erro interno do servidor" });
     }
   })
 
-  /* #swagger.responses[200] = {
+  /* #swagger.responses[201] = {
     description: 'Registro cadastrado com sucesso',
     schema: {$ref: "#/definitions/responseCreateSuccess"} }
   } */
@@ -50,9 +53,17 @@ router.get("/", async (req, res) => {
       };
     });
   
+    /* #swagger.responses[201] = {
+      description: 'Todos os registros retornados',
+      schema: {$ref: "#/definitions/responseGet"} }
+    } */
     res.status(201).json(linkedinArray);
   })
   .catch((error) => {
+    /* #swagger.responses[500] = {
+      description: 'Erro interno do servidor',
+      schema: {$ref: "#/definitions/responseError"} }
+    } */
     console.error("Erro ao obter dados do Firebase:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   });
@@ -71,16 +82,32 @@ router.get("/:id", async (req, res) => {
     db.ref("linkedin").child(id).once("value", (snapshot) => {
       const objetoData = snapshot.val();
       if (objetoData) {
+        /* #swagger.responses[201] = {
+          description: 'Registro retornado pelo ID',
+          schema: {$ref: "#/definitions/responseGetRegisterById"} }
+        } */
         res.status(201).json(objetoData);
       } else {
+        /* #swagger.responses[404] = {
+          description: 'Registro não encontrado',
+          schema: {$ref: "#/definitions/responseNotFound"} }
+        } */
         res.status(404).json({ error: "Registro não encontrado"});
       }
     })
     .catch((error) => {
+      /* #swagger.responses[500] = {
+        description: 'Erro interno do servidor',
+        schema: {$ref: "#/definitions/responseError"} }
+      } */
       console.error("Erro ao obter dados do Firebase:", error);
       res.status(500).json({ error: "Erro interno do servidor" });
     });
   } catch (error) {
+    /* #swagger.responses[500] = {
+      description: 'Erro interno do servidor',
+      schema: {$ref: "#/definitions/responseError"} }
+    } */
     console.error("Erro ao obter registro por ID:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
@@ -112,10 +139,18 @@ router.put("/:id", async (req, res) => {
       "linkedin": linkedin,
       "frase": frase
     }).then(() => {
+      /* #swagger.responses[201] = {
+        description: 'Registro atualizado com sucesso',
+        schema: {$ref: "#/definitions/responseUpdateSuccess"} }
+      } */
       res.status(201).json({ "msg": "Registro atualizado com sucesso", "key": id });
       console.log("Registro atualizado com sucesso!");
     })
     .catch((error) => {
+      /* #swagger.responses[500] = {
+        description: 'Erro interno do servidor',
+        schema: {$ref: "#/definitions/responseError"} }
+      } */
       console.error("Erro ao atualizar registro no Firebase:", error);
       res.status(500).json({ error: "Erro interno do servidor" });
     });
@@ -133,8 +168,16 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await db.ref("linkedin").child(id).remove();
+    /* #swagger.responses[201] = {
+      description: 'Registro excluído com sucesso',
+      schema: {$ref: "#/definitions/responseDeleteSuccess"} }
+    } */
     res.status(201).json({ message: "Registro excluído com sucesso" });
   } catch (error) {
+    /* #swagger.responses[500] = {
+      description: 'Erro interno do servidor',
+      schema: {$ref: "#/definitions/responseError"} }
+    } */
     console.error("Erro ao excluir registro por ID:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }

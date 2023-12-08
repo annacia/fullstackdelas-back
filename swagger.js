@@ -13,14 +13,42 @@ const doc = {
     ],
     components: {
         schemas: {
-            requestBody: {
+            requestRegisterCreate: {
+                $nome: "Nome do Usuário",
+                $email: "email@test.com",
+                $linkedin: "https://www.linkedin.com/in/usuario",
+                $frase: "Uma frase bonita"
+            },
+            responseGet: [
+                {
+                    "nome": "Nome do Usuário",
+                    "email": "email@test.com",
+                    "linkedin": "https://www.linkedin.com/in/usuario",
+                    "frase": "Uma frase bonita"
+                }
+            ],
+            responseGetRegisterById: {
                 $nome: "Nome do Usuário",
                 $email: "email@test.com",
                 $linkedin: "https://www.linkedin.com/in/usuario",
                 $frase: "Uma frase bonita"
             },
             responseCreateSuccess: {
-                $msg: "Registro criado com sucesso"
+                $msg: "Registro criado com sucesso",
+                $key: "-123abc"
+            },
+            responseUpdateSuccess: {
+                $msg: "Registro atualizado com sucesso",
+                $key: "-123abc"
+            },
+            responseDeleteSuccess: {
+                $msg: "Registro excluído com sucesso"
+            },
+            responseError: {
+                $error: "Erro interno do servidor"
+            },
+            responseNotFound: {
+                $error: "Registro não encontrado"
             }
         }
     }
