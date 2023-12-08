@@ -34,14 +34,12 @@ const linkedinRoutes = require("./routes/linkedin");
 app.use("/linkedin", linkedinRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-const corsOptions = {
-  origin: `'*'`,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+  app.use(cors());
+  next();
+});
 
 // Outras rotas podem ser adicionadas da mesma forma
 
